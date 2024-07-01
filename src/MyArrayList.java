@@ -11,7 +11,7 @@ public class MyArrayList<E> implements MyList<E> {
     /**
      * Default capacity.
      */
-    private static final int DEFAULT_CAPACITY = 3;
+    private static final int DEFAULT_CAPACITY = 10;
 
     /**
      * Array which elements of the MyArrayList are stored
@@ -225,6 +225,16 @@ public class MyArrayList<E> implements MyList<E> {
     }
 
     /**
+     * Check either the list is empty or not.
+     * @return {@code true} if the list is empty.
+     */
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /**
      * Places given the element to specified place of this list.
      * @param index index of the place where the element needs to be placed.
      * @param element element that to be placed.
@@ -259,10 +269,21 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public String toString() {
+        if (size==0)
+            return "[]";
+
+        int i = 0;
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[");
         for (Object element : elements){
-            if (element != null)
-                stringBuilder.append(element).append("\n");
+            if (element != null) {
+                if (i == size - 1) {
+                    stringBuilder.append(element).append("]");
+                    break;
+                }
+                stringBuilder.append(element).append(", ");
+            }
+            i++;
         }
         return stringBuilder.toString();
     }

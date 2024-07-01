@@ -71,6 +71,7 @@ public interface MyList<E>  {
      * @return value of a removed element of this list.
      */
      E remove(int index);
+     boolean isEmpty();
 
     /**
      * Places given the element to specified place of this list.
@@ -78,4 +79,17 @@ public interface MyList<E>  {
      * @param element element that to be placed.
      */
      void add(int index, E element);
+
+    /**
+     * Return the first element of this list.
+     * @return the first element of this list.
+     * @throws MyNoSuchElementException if the list is empty.
+     */
+    default E getHead(){
+         if (isEmpty()){
+             throw new MyNoSuchElementException("The list is empty");
+         }
+         return this.get(0);
+
+     }
 }

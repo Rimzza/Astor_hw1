@@ -4,28 +4,30 @@
  * It is necessary for fast place elements to list (except for placing the item in the specified location).
  * Each element of the list has links to the previous element(except first elements)
  * and to the next element(except last elements).
- * @author Nikita Egorov
+ *
  * @param <E> the type of elements held in this collection
+ * @author Nikita Egorov
  */
 public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * First element of this list.
      */
-    private static Node head;
+    private Node head;
 
     /**
      * Last element of this list.
      */
-    private static Node last;
+    private Node last;
 
     /**
      * Numbers of elements in the list.
      */
-    private static int size;
+    private int size;
 
     /**
      * Return Numbers of elements in the list.
+     *
      * @return size
      */
     @Override
@@ -34,7 +36,8 @@ public class MyLinkedList<E> implements MyList<E> {
     }
 
     /**
-     *  Places given an element to the end of this list.
+     * Places given an element to the end of this list.
+     *
      * @param e element which needed to be place.
      * @return {@code true} if the given element was successfully placed.
      */
@@ -46,6 +49,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * Remove given element from the list. If the element is present.
+     *
      * @param o element which needed to be removed.
      * @return {@code true} if the given element was successfully removed.
      * @throws MyNoSuchElementException if specified element is not present
@@ -61,11 +65,13 @@ public class MyLinkedList<E> implements MyList<E> {
             }
             throw new MyNoSuchElementException();
         }
+        size--;
         return false;
     }
 
     /**
      * Remove specified elements from the list and change links.
+     *
      * @param e element that to be removed.
      * @return element that was removed.
      */
@@ -89,7 +95,6 @@ public class MyLinkedList<E> implements MyList<E> {
         }
 
         e.value = null;
-        size--;
         return value;
 
     }
@@ -101,7 +106,7 @@ public class MyLinkedList<E> implements MyList<E> {
     public void clear() {
         Node<E> node = head;
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 1; i < size ; i++) {
             Node<E> next = node.nextNode;
             node.value = null;
             node.prevNode = null;
@@ -117,10 +122,11 @@ public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * Returns the element at the specified position in this list.
+     *
      * @param index index of a needed element of the list.
      * @return the element at the specified position in this list.
      * @throws IndexOutOfBoundsException if the index is out of range
-     *              ({@code index < 0 || index >= size()}).
+     *                                   ({@code index < 0 || index >= size()}).
      */
     @Override
     public E get(int index) {
@@ -130,9 +136,10 @@ public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * Sort the list by specified order which specified by user.
+     *
      * @param c {@code MyComparator} interface which specify order in the list.
-     * @see MyComparator
      * @throws MyNoSuchElementException if the list is empty.
+     * @see MyComparator
      */
     @Override
     public void sort(MyComparator<? super E> c) {
@@ -158,10 +165,11 @@ public class MyLinkedList<E> implements MyList<E> {
     /**
      * Replaces the element at the specified position in this list into the
      * specified element.
-     * @param index index of the element whose value needs to be changed.
+     *
+     * @param index   index of the element whose value needs to be changed.
      * @param element new value of the element.
-     *  @throws IndexOutOfBoundsException if the index is out of range
-     * ({@code index < 0 || index >= size()}).
+     * @throws IndexOutOfBoundsException if the index is out of range
+     *                                   ({@code index < 0 || index >= size()}).
      */
     @Override
     public void set(int index, E element) {
@@ -172,24 +180,41 @@ public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * Remove given element from the list. If the element is present.
+     *
      * @param index index of the element of this list whose needs to be removed.
      * @return value of a removed element of this list.
      */
     @Override
     public E remove(int index) {
         checkIndex(index);
+        E e;
         if (index == 0) {
-            return removeFirst();
+            e = removeFirst();
 
         } else if (index == size) {
-            return removeLast();
+            e = removeLast();
         } else {
-            return destroy(node(index));
+            e = destroy(node(index));
         }
+        size --;
+        return e;
+
+
+    }
+
+    /**
+     * Check either the list is empty or not.
+     *
+     * @return {@code true} if the list is empty.
+     */
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     /**
      * Remove the last element of this list.
+     *
      * @return Old value of the old last element.
      * @throws MyNoSuchElementException if there is no last element in this list.
      */
@@ -216,6 +241,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * Remove the first element of this list.
+     *
      * @return Old value of the old first element.
      * @throws MyNoSuchElementException if there is no first element in this list.
      */
@@ -242,7 +268,8 @@ public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * Places given the element to specified place of this list.
-     * @param index index of the place where the element needs to be placed.
+     *
+     * @param index   index of the place where the element needs to be placed.
      * @param element element that to be placed.
      */
     @Override
@@ -264,6 +291,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * link the specified element as the head of this list.
+     *
      * @param e element that will be head of this list.
      */
     private void linkFirst(E e) {
@@ -275,9 +303,11 @@ public class MyLinkedList<E> implements MyList<E> {
         else
             n.prevNode = node;
     }
+
     /**
      * link the specified element as the last of this list.
-     * @param element element that will be last of this list.
+     *
+     * @param element element that will be the last of this list.
      */
     private void linkLast(E element) {
         Node<E> oldLast = last;
@@ -295,24 +325,25 @@ public class MyLinkedList<E> implements MyList<E> {
 
 
     private Node<E> node(int index) {
+        Node<E> node;
         if (index > (size / 2)) {
-            Node<E> node = last;
+            node = last;
             for (int i = size - 1; i > index; i--) {
                 node = node.prevNode;
             }
-            return node;
         } else {
-            Node<E> node = head;
+            node = head;
             for (int i = 0; i < index; i++) {
                 node = node.nextNode;
             }
-            return node;
         }
+        return node;
     }
 
     /**
-     *Checks if the {@code index} is within the bounds of the range from
+     * Checks if the {@code index} is within the bounds of the range from
      * {@code 0} (inclusive) to {@code size} (exclusive).
+     *
      * @param index the index.
      * @return {@code true} if it is within the bounds of the range.
      * @throws IndexOutOfBoundsException if index out of range({@code index >= size}, {@code index < 0}).
@@ -325,16 +356,8 @@ public class MyLinkedList<E> implements MyList<E> {
     }
 
     /**
-     * Return value of head.
-     * @return value if head.
-     */
-
-    public E getHead(){
-       return (E) head.value;
-    }
-
-    /**
      * Return value of last element.
+     *
      * @return value of last element.
      */
     public E getLast(){
@@ -355,9 +378,19 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public String toString() {
+        if (size == 0)
+            return "[]";
+
+        int j = 0;
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[");
         for (Node<E> i = head; i != null; i = i.nextNode) {
-            stringBuilder.append(i.value).append("\n");
+            if (j == size - 1) {
+                stringBuilder.append(i.value).append("]");
+                break;
+            }
+            stringBuilder.append(i.value).append(",");
+            j++;
         }
         return stringBuilder.toString();
     }

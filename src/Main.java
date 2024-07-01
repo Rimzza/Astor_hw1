@@ -1,9 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) {
+
+
 
 
 
@@ -37,25 +41,26 @@ public class Main {
         System.out.println(test);*/
 
 
-        MyLinkedList<Integer> test = new MyLinkedList<>();
-
+        MyList<Integer> test = new MyArrayList<>();
         test.add(11);
         test.add(30);
         test.add(12);
         test.add(-1);
         test.add(13);
-        test.add(10000);
-        test.set(32, 231);
-        test.remove(312);
-        test.clear();
-        System.out.println(test);
-        System.out.println(test.getHead() + " : " + test.getLast());
+        test.remove(1);
 
-        test.sort(new MyComp());
 
-        System.out.println(test);
 
-        System.out.println(test.getHead() + " : " + test.getLast());
+
+        MyList<Integer> test2 = new MyLinkedList<>();
+        test2.add(0);
+        test2.add(1);
+        test2.add(3);
+        test2.add(5);
+        test2.remove(0);
+        test2.clear();
+
+        System.out.println(test2);
 
 
     }
